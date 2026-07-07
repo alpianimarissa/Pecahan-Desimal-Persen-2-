@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Operasi Campuran Matematika</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        },
+                        easy: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            700: '#15803d',
+                        },
+                        medium: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            500: '#f59e0b',
+                            700: '#b45309',
+                        },
+                        hard: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            500: '#ef4444',
+                            700: '#b91c1c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- KaTeX CSS and JS for rendering beautiful math -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMath()"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm px-4 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white font-black text-xl shadow-md">
+                    M
+                </div>
+                <div>
+                    <h1 class="text-base md:text-lg font-bold text-slate-900 leading-tight">Algonova Math Prep</h1>
+                    <p class="text-[10px] md:text-xs text-slate-500 font-medium">Kuis Operasi Campuran</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <span id="global-timer" class="text-sm font-bold font-mono bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700">
+                    ⏱️ 00:00
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 flex flex-col gap-6">
+        
+        <!-- ================= START SCREEN ================= -->
+        <div id="start-screen" class="bg-white border border-slate-200 rounded-3xl p-6 md:p-12 shadow-sm text-center max-w-2xl mx-auto space-y-6 my-auto">
+            <div class="inline-flex p-4 bg-brand-50 rounded-2xl text-brand-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+            </div>
+            <h2 class="text-3xl font-extrabold text-slate-900">Misi Operasi Campuran</h2>
+            <p class="text-slate-600 text-sm md:text-base leading-relaxed">
+               Uji ketangguhan logikamu dalam menyelesaikan 15 tantangan bertingkat berikut:
+            </p>
+            
+            <div class="grid grid-cols-3 gap-3 text-left">
+                <div class="p-3 bg-easy-50 border border-easy-100 rounded-xl text-center">
+                    <span class="block text-easy-700 text-xs font-bold uppercase">5 Soal</span>
+                    <span class="block text-sm font-extrabold text-easy-700">Mudah 🟢</span>
+                </div>
+                <div class="p-3 bg-medium-50 border border-medium-100 rounded-xl text-center">
+                    <span class="block text-medium-700 text-xs font-bold uppercase">5 Soal</span>
+                    <span class="block text-sm font-extrabold text-medium-700">Sedang 🟡</span>
+                </div>
+                <div class="p-3 bg-hard-50 border border-hard-100 rounded-xl text-center">
+                    <span class="block text-hard-700 text-xs font-bold uppercase">5 Soal</span>
+                    <span class="block text-sm font-extrabold text-hard-700">Sulit (Cerita) 🔴</span>
+                </div>
+            </div>
+
+            <div class="pt-4">
+                <button onclick="startQuiz()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 px-6 rounded-xl transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    Mulai Pertempuran Sekarang! ⚔️
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= QUIZ INTERFACE ================= -->
+        <div id="quiz-interface" class="hidden grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+            
+            <!-- Sidebar: Navigation & Progression Grid -->
+            <div class="lg:col-span-1 bg-white border border-slate-200 rounded-2xl p-4 md:p-5 shadow-sm space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <h3 class="font-bold text-slate-900 text-sm">Peta Navigasi Soal</h3>
+                    <button onclick="resetQuizPrompt()" class="text-xs text-red-500 hover:text-red-700 font-bold transition">Reset</button>
+                </div>
+
+                <!-- Filters -->
+                <div class="grid grid-cols-4 gap-1 bg-slate-100 p-1 rounded-lg text-center text-[10px] font-bold text-slate-500">
+                    <button id="filter-all" onclick="filterDifficulty('all')" class="bg-white text-slate-800 py-1.5 rounded shadow-sm">Semua</button>
+                    <button id="filter-easy" onclick="filterDifficulty('easy')" class="py-1.5 rounded hover:text-easy-700">Mudah</button>
+                    <button id="filter-medium" onclick="filterDifficulty('medium')" class="py-1.5 rounded hover:text-medium-700">Sedang</button>
+                    <button id="filter-hard" onclick="filterDifficulty('hard')" class="py-1.5 rounded hover:text-hard-700">Sulit</button>
+                </div>
+
+                <!-- Navigation Grid Buttons (1 to 15) -->
+                <div id="navigation-grid" class="grid grid-cols-5 gap-2 pt-2">
+                    <!-- JS will generate grid cells -->
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 space-y-2 text-xs text-slate-500">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 bg-slate-200 rounded"></span>
+                        <span>Belum Dijawab</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 bg-indigo-500 rounded"></span>
+                        <span>Sedang Dikerjakan</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 bg-brand-600 rounded"></span>
+                        <span>Telah Terjawab</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Workboard: Question & Options -->
+            <div class="lg:col-span-3 space-y-6">
+                <!-- Question Card -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm space-y-6">
+                    
+                    <!-- Question Header (Difficulty tag & score status) -->
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                        <div class="flex items-center gap-2">
+                            <span id="question-index-label" class="text-sm font-extrabold text-slate-400">SOAL #01</span>
+                            <span id="difficulty-badge" class="text-xs font-bold px-2.5 py-1 rounded">Level: Mudah</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-slate-500">Selesai:</span>
+                            <div class="w-24 bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                                <div id="top-progress-bar" class="bg-brand-600 h-full w-0 transition-all duration-300"></div>
+                            </div>
+                            <span id="progress-percentage" class="text-xs font-extrabold text-brand-600">0%</span>
+                        </div>
+                    </div>
+
+                    <!-- Question Text -->
+                    <div class="space-y-3">
+                        <p id="question-text" class="text-lg md:text-xl font-bold text-slate-900 leading-relaxed">
+                            Loading question text...
+                        </p>
+                    </div>
+
+                    <!-- Multiple Choices -->
+                    <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                        <!-- JS generated options -->
+                    </div>
+
+                    <!-- Explanation Box (Initially Hidden until answered) -->
+                    <div id="explanation-box" class="hidden p-5 rounded-xl border space-y-2 transition duration-300">
+                        <div class="flex items-center gap-2">
+                            <span id="explanation-status-icon" class="text-lg"></span>
+                            <h4 id="explanation-title" class="font-bold text-sm">Pembahasan Kunci Jawaban</h4>
+                        </div>
+                        <p id="explanation-text" class="text-xs md:text-sm leading-relaxed text-slate-600">
+                            Langkah demi langkah cara menyelesaikan soal...
+                        </p>
+                    </div>
+
+                    <!-- Control Action Footer -->
+                    <div class="flex justify-between items-center pt-6 border-t border-slate-100">
+                        <button id="prev-question-btn" onclick="navigateQuestion(-1)" class="px-5 py-2.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition font-bold text-sm flex items-center gap-1">
+                            &larr; Sebelumnya
+                        </button>
+                        
+                        <button id="submit-quiz-btn" onclick="finishQuizPrompt()" class="hidden px-6 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition font-bold text-sm">
+                            Kirim Jawaban Akhir 🎉
+                        </button>
+
+                        <button id="next-question-btn" onclick="navigateQuestion(1)" class="px-5 py-2.5 rounded-xl bg-brand-600 text-white hover:bg-brand-700 transition font-bold text-sm flex items-center gap-1">
+                            Berikutnya &rarr;
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= RESULT / SCOREBOARD SCREEN ================= -->
+        <div id="result-screen" class="hidden space-y-6">
+            <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-sm text-center max-w-3xl mx-auto space-y-6">
+                
+                <div class="inline-flex p-5 bg-emerald-50 text-emerald-600 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight">Evaluasi Misi Selesai!</h2>
+                <p class="text-slate-500 text-sm max-w-lg mx-auto">Selamat! Kamu telah menyelesaikan 15 tantangan operasi campuran.</p>
+
+                <!-- Statistics Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 max-w-2xl mx-auto">
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <span class="block text-xs text-slate-400 font-bold uppercase">Skor Nilai</span>
+                        <span id="stat-score" class="text-3xl font-black text-brand-600">0 / 100</span>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <span class="block text-xs text-slate-400 font-bold uppercase">Benar</span>
+                        <span id="stat-correct" class="text-3xl font-black text-emerald-600">0</span>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <span class="block text-xs text-slate-400 font-bold uppercase">Salah</span>
+                        <span id="stat-wrong" class="text-3xl font-black text-red-500">0</span>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                        <span class="block text-xs text-slate-400 font-bold uppercase">Durasi</span>
+                        <span id="stat-time" class="text-3xl font-black text-slate-700">00:00</span>
+                    </div>
+                </div>
+
+                <!-- Message based on score -->
+                <div class="bg-brand-50 border border-brand-100 p-4 rounded-xl max-w-xl mx-auto">
+                    <p id="stat-message" class="text-sm font-semibold text-brand-800 leading-relaxed">
+                        Evaluasi Performa
+                    </p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+                    <button onclick="goToReviewMode()" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-6 rounded-xl transition shadow">
+                        Ulas Hasil Pembahasan Lengkap 📝
+                    </button>
+                    <button onclick="restartQuiz()" class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 px-6 rounded-xl transition">
+                        Ulangi Kuis 🔄
+                    </button>
+                </div>
+            </div>
+
+            <!-- Detailed Review Container -->
+            <div id="detailed-review" class="hidden max-w-4xl mx-auto space-y-6">
+                <div class="border-b border-slate-200 pb-2">
+                    <h3 class="text-xl font-bold text-slate-900">Pembahasan Evaluasi Mandiri</h3>
+                    <p class="text-slate-500 text-xs">Ulas satu-per-satu soal di bawah ini untuk memahami kesalahan.</p>
+                </div>
+
+                <div id="review-cards-list" class="space-y-4">
+                    <!-- Generated via JS -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Bar -->
+    <footer class="bg-slate-900 text-slate-400 text-xs text-center py-6 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p class="font-semibold text-slate-300">&copy; 2026 Algonova Math Academy. All rights reserved.</p>
+            <p>Dibangun secara eksklusif untuk mendukung petualangan belajar matematika interaktif.</p>
+        </div>
+    </footer>
+
+    <!-- Client-side Logic Script -->
+    <script>
+        // Quiz Questions Data Structure (From index.html)
+        const questions = [
+            // ================= EASY (MUDAH) - 5 SOAL =================
+            {
+                id: 1,
+                difficulty: 'easy',
+                text: "Hasil dari: $0.5 + \\frac{1}{4} - 20\\% = \\dots$",
+                options: [
+                    { key: 'A', text: "0.45" },
+                    { key: 'B', text: "0.55" },
+                    { key: 'C', text: "0.65" },
+                    { key: 'D', text: "0.75" }
+                ],
+                correct: 'B',
+                explanation: "Ubah semua bentuk bilangan menjadi bentuk desimal:<br>• $0.5$ tetap $0.5$<br>• $\\frac{1}{4} = 0.25$<br>• $20\\% = 0.20$<br>Maka:<br>$$0.5 + 0.25 - 0.20 = 0.75 - 0.20 = 0.55$$"
+            },
+            {
+                id: 2,
+                difficulty: 'easy',
+                text: "Hasil dari: $\\frac{3}{5} \\times 0.5 + 10\\% = \\dots$",
+                options: [
+                    { key: 'A', text: "0.25" },
+                    { key: 'B', text: "0.30" },
+                    { key: 'C', text: "0.40" },
+                    { key: 'D', text: "0.50" }
+                ],
+                correct: 'C',
+                explanation: "Selesaikan perkalian terlebih dahulu menggunakan desimal:<br>• $\\frac{3}{5} = 0.6$<br>• $0.6 \\times 0.5 = 0.3$<br>• $10\\% = 0.1$<br>Maka:<br>$$0.3 + 0.1 = 0.4$$"
+            },
+            {
+                id: 3,
+                difficulty: 'easy',
+                text: "Hasil dari: $75\\% - 0.25 + \\frac{2}{5} = \\dots$",
+                options: [
+                    { key: 'A', text: "0.80" },
+                    { key: 'B', text: "0.90" },
+                    { key: 'C', text: "1.00" },
+                    { key: 'D', text: "0.75" }
+                ],
+                correct: 'B',
+                explanation: "Ubah semua bentuk bilangan ke desimal:<br>• $75\\% = 0.75$<br>• $\\frac{2}{5} = 0.4$<br>Maka:<br>$$0.75 - 0.25 + 0.4 = 0.5 + 0.4 = 0.9$$"
+            },
+            {
+                id: 4,
+                difficulty: 'easy',
+                text: "Hasil dari: $\\frac{2}{5} \\times (1.5 - 50\\%) = \\dots$",
+                options: [
+                    { key: 'A', text: "0.20" },
+                    { key: 'B', text: "0.30" },
+                    { key: 'C', text: "0.40" },
+                    { key: 'D', text: "0.50" }
+                ],
+                correct: 'C',
+                explanation: "Selesaikan operasi di dalam kurung terlebih dahulu:<br>• $(1.5 - 50\\%) = (1.5 - 0.5) = 1.0$<br>• $\\frac{2}{5} = 0.4$<br>Maka:<br>$$0.4 \\times 1.0 = 0.4$$"
+            },
+            {
+                id: 5,
+                difficulty: 'easy',
+                text: "Hasil dari: $1 \\frac{1}{2} + 0.75 - 125\\% = \\dots$",
+                options: [
+                    { key: 'A', text: "0.75" },
+                    { key: 'B', text: "1.00" },
+                    { key: 'C', text: "1.25" },
+                    { key: 'D', text: "1.50" }
+                ],
+                correct: 'B',
+                explanation: "Ubah semua bentuk bilangan ke desimal:<br>• $1 \\frac{1}{2} = 1.5$<br>• $125\\% = 1.25$<br>Maka:<br>$$1.5 + 0.75 - 1.25 = 2.25 - 1.25 = 1.00$$"
+            },
+
+            // ================= MEDIUM (SEDANG) - 5 SOAL =================
+            {
+                id: 6,
+                difficulty: 'medium',
+                text: "Hasil dari: $1.2 \\div \\frac{1}{2} - 50\\% = \\dots$",
+                options: [
+                    { key: 'A', text: "1.70" },
+                    { key: 'B', text: "1.90" },
+                    { key: 'C', text: "2.10" },
+                    { key: 'D', text: "2.40" }
+                ],
+                correct: 'B',
+                explanation: "Selesaikan pembagian pecahan terlebih dahulu:<br>• $1.2 \\div \\frac{1}{2} = 1.2 \\times 2 = 2.4$<br>• $50\\% = 0.5$<br>Maka:<br>$$2.4 - 0.5 = 1.9$$"
+            },
+            {
+                id: 7,
+                difficulty: 'medium',
+                text: "Hasil dari: $0.8 \\div 20\\% \\times \\frac{1}{4} = \\dots$",
+                options: [
+                    { key: 'A', text: "1.00" },
+                    { key: 'B', text: "2.00" },
+                    { key: 'C', text: "0.50" },
+                    { key: 'D', text: "4.00" }
+                ],
+                correct: 'A',
+                explanation: "Ikuti urutan operasi KABATAKU:<br>• $0.8 \\div 20\\% = 0.8  \\div 0.2 = 4$<br>• $4 \\times \\frac{1}{4} = 1$<br>Maka:<br>$$4 \\times 0.25 = 1$$"
+            },
+            {
+                id: 8,
+                difficulty: 'medium',
+                text: "Hasil dari: $(0.6 + 40\\%) \\div \\frac{1}{2} = \\dots$",
+                options: [
+                    { key: 'A', text: "1.00" },
+                    { key: 'B', text: "2.00" },
+                    { key: 'C', text: "1.50" },
+                    { key: 'D', text: "3.00" }
+                ],
+                correct: 'B',
+                explanation: "Selesaikan operasi dalam kurung terlebih dahulu:<br>• $(0.6 + 40\\%) = (0.6 + 0.4) = 1.0$<br>• $1.0 \\div \\frac{1}{2} = 1.0 \\times 2 = 2$<br>Maka hasilnya adalah $2$."
+            },
+            {
+                id: 9,
+                difficulty: 'medium',
+                text: "Hasil dari: $\\frac{4}{5} - 0.3 \\times 20\\% = \\dots$",
+                options: [
+                    { key: 'A', text: "0.10" },
+                    { key: 'B', text: "0.74" },
+                    { key: 'C', text: "0.77" },
+                    { key: 'D', text: "0.56" }
+                ],
+                correct: 'B',
+                explanation: "Lakukan operasi perkalian terlebih dahulu:<br>• $0.3 \\times 20\\% = 0.3 \\times 0.2 = 0.06$<br>• $\\frac{4}{5} = 0.8$<br>Maka:<br>$$0.8 - 0.06 = 0.74$$"
+            },
+            {
+                id: 10,
+                difficulty: 'medium',
+                text: "Hasil dari: $2.5 \\div \\frac{1}{4} + 50\\% = \\dots$",
+                options: [
+                    { key: 'A', text: "10.0" },
+                    { key: 'B', text: "10.5" },
+                    { key: 'C', text: "11.5" },
+                    { key: 'D', text: "9.5" }
+                ],
+                correct: 'B',
+                explanation: "Lakukan pembagian terlebih dahulu:<br>• $2.5 \\div \\frac{1}{4} = 2.5 \\times 4 = 10$<br>• $50\\% = 0.5$<br>Maka:<br>$$10 + 0.5 = 10.5$$"
+            },
+
+            // ================= HARD (SULIT - SOAL CERITA) - 5 SOAL =================
+            {
+                id: 11,
+                difficulty: 'hard',
+                text: "Kakak memiliki sebotol sirup berisi $1.5$ liter. Sebanyak $\\frac{1}{4}$ bagian sirup digunakan untuk membuat es buah, lalu Kakak menambahkan lagi $20\\%$ dari volume sirup awal ke dalam botol. Berapa liter volume sirup di dalam botol sekarang?",
+                options: [
+                    { key: 'A', text: "1.350 L" },
+                    { key: 'B', text: "1.425 L" },
+                    { key: 'C', text: "1.500 L" },
+                    { key: 'D', text: "1.250 L" }
+                ],
+                correct: 'B',
+                explanation: "1. Volume awal = $1.5$ liter.<br>2. Sirup digunakan = $\\frac{1}{4} \\times 1.5 = 0.375$ liter.<br>3. Sisa setelah digunakan = $1.5 - 0.375 = 1.125$ liter.<br>4. Ditambahkan lagi = $20\\% \\times 1.5$ (dari volume awal) = $0.3$ liter.<br>5. Volume akhir = $1.125 + 0.3 = 1.425$ liter."
+            },
+            {
+                id: 12,
+                difficulty: 'hard',
+                text: "Di dalam tabungan, sisa uang saku seseorang adalah $Rp100.000$. Sebanyak $0.3$ bagian digunakan untuk membeli buku tulis, dan $25\\%$ dari total tabungan awal digunakan untuk membeli pulsa. Berapa rupiah sisa uang tabungannya sekarang?",
+                options: [
+                    { key: 'A', text: "Rp 35.000" },
+                    { key: 'B', text: "Rp 45.000" },
+                    { key: 'C', text: "Rp 55.000" },
+                    { key: 'D', text: "Rp 60.000" }
+                ],
+                correct: 'B',
+                explanation: "1. Jumlah tabungan awal = $Rp100.000$.<br>2. Digunakan untuk buku = $0.3 \\times 100.000 = Rp30.000$.<br>3. Digunakan untuk pulsa = $25\\% \\times 100.000 = Rp25.000$.<br>4. Sisa uang tabungan = $100.000 - (30.000 + 25.000) = Rp45.000$."
+            },
+            {
+                id: 13,
+                difficulty: 'hard',
+                text: "Sebuah toko pakaian memberikan diskon sebesar $40\\%$ untuk sepotong baju yang harga awalnya $Rp150.000$. Jika pembeli harus membayar pajak sebesar $\\frac{1}{10}$ dari harga setelah diskon, berapa rupiah total yang harus dibayarkan pembeli?",
+                options: [
+                    { key: 'A', text: "Rp 90.000" },
+                    { key: 'B', text: "Rp 95.000" },
+                    { key: 'C', text: "Rp 99.000" },
+                    { key: 'D', text: "Rp 105.000" }
+                ],
+                correct: 'C',
+                explanation: "1. Harga baju awal = $Rp150.000$.<br>2. Besarnya diskon = $40\\% \\times 150.000 = Rp60.000$.<br>3. Harga setelah diskon = $150.000 - 60.000 = Rp90.000$.<br>4. Besarnya pajak = $\\frac{1}{10} \\times 90.000 = Rp9.000$.<br>5. Total pembayaran = $90.000 + 9.000 = Rp99.000$."
+            },
+            {
+                id: 14,
+                difficulty: 'hard',
+                text: "Ibu membeli tepung sebanyak $2.5$ kg. Sebanyak $\\frac{2}{5}$ bagian tepung tersebut digunakan untuk membuat kue donat. Keesokan harinya, Ibu membeli lagi tepung sebanyak $50\\%$ dari berat tepung yang tersisa. Berapa kg total tepung terigu yang dimiliki Ibu sekarang?",
+                options: [
+                    { key: 'A', text: "2.25 kg" },
+                    { key: 'B', text: "2.50 kg" },
+                    { key: 'C', text: "1.75 kg" },
+                    { key: 'D', text: "2.00 kg" }
+                ],
+                correct: 'A',
+                explanation: "1. Tepung awal = $2.5$ kg.<br>2. Digunakan untuk kue = $\\frac{2}{5} \\times 2.5$ kg = $1.0$ kg.<br>3. Sisa tepung Ibu = $2.5 - 1.0 = 1.5$ kg.<br>4. Ibu membeli lagi = $50\\% \\times 1.5$ kg = $0.75$ kg.<br>5. Total tepung Ibu sekarang = $1.5 + 0.75 = 2.25$ kg."
+            },
+            {
+                id: 15,
+                difficulty: 'hard',
+                text: "Sebuah truk mengangkut muatan seberat $4.5$ ton. Di jembatan timbang pertama, muatan dikurangi sebanyak $20\\%$. Di jembatan timbang kedua, muatan diturunkan lagi sebanyak $\\frac{1}{2}$ ton. Berapa ton sisa muatan truk itu sekarang?",
+                options: [
+                    { key: 'A', text: "3.0 ton" },
+                    { key: 'B', text: "3.1 ton" },
+                    { key: 'C', text: "3.2 ton" },
+                    { key: 'D', text: "3.5 ton" }
+                ],
+                correct: 'B',
+                explanation: "1. Muatan awal = $4.5$ ton.<br>2. Dikurangi di jembatan timbang I = $20\\% \\times 4.5 = 0.9$ ton.<br>3. Sisa muatan I = $4.5 - 0.9 = 3.6$ ton.<br>4. Diturunkan di jembatan timbang II = $\\frac{1}{2}$ ton = $0.5$ ton.<br>5. Sisa muatan akhir = $3.6 - 0.5 = 3.1$ ton."
+            }
+        ];
+
+        // Global State variables
+        let currentQuestionIndex = 0;
+        let selectedDifficultyFilter = 'all';
+        let userAnswers = Array(questions.length).fill(null); // stores key: 'A', 'B', etc.
+        let timerInterval = null;
+        let elapsedSeconds = 0;
+
+        // Start Quiz Game
+        function startQuiz() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-interface').classList.remove('hidden');
+            
+            // Build navigation grid
+            buildNavigationGrid();
+            // Load current question
+            loadQuestion(0);
+            // Start timer
+            startTimer();
+        }
+
+        // Global Timer function
+        function startTimer() {
+            elapsedSeconds = 0;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                elapsedSeconds++;
+                const mins = Math.floor(elapsedSeconds / 60).toString().padStart(2, '0');
+                const secs = (elapsedSeconds % 60).toString().padStart(2, '0');
+                document.getElementById('global-timer').textContent = `⏱️ ${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        // Generate the 1-15 grid in sidebar
+        function buildNavigationGrid() {
+            const gridContainer = document.getElementById('navigation-grid');
+            gridContainer.innerHTML = '';
+
+            questions.forEach((q, idx) => {
+                // Check if this question matches active filter
+                const isMatch = (selectedDifficultyFilter === 'all' || q.difficulty === selectedDifficultyFilter);
+                if (!isMatch) return;
+
+                const btn = document.createElement('button');
+                btn.id = `nav-cell-${idx}`;
+                btn.textContent = q.id;
+                
+                // Color status logic
+                let btnStyle = "w-full py-2.5 rounded-lg text-xs font-bold transition border ";
+                
+                if (idx === currentQuestionIndex) {
+                    btnStyle += "bg-indigo-500 text-white border-indigo-600 shadow-sm";
+                } else if (userAnswers[idx] !== null) {
+                    btnStyle += "bg-brand-600 text-white border-brand-700";
+                } else {
+                    btnStyle += "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200";
+                }
+
+                btn.className = btnStyle;
+                btn.onclick = () => loadQuestion(idx);
+                gridContainer.appendChild(btn);
+            });
+        }
+
+        // Filters sidebar difficulty selection
+        function filterDifficulty(difficulty) {
+            selectedDifficultyFilter = difficulty;
+            
+            // Reset filters classes
+            ['all', 'easy', 'medium', 'hard'].forEach(d => {
+                const btn = document.getElementById(`filter-${d}`);
+                if (d === difficulty) {
+                    btn.className = "bg-white text-slate-800 py-1.5 rounded shadow-sm";
+                } else {
+                    let textCol = "text-slate-500 hover:text-slate-800";
+                    if (d === 'easy') textCol = "text-slate-500 hover:text-easy-700";
+                    if (d === 'medium') textCol = "text-slate-500 hover:text-medium-700";
+                    if (d === 'hard') textCol = "text-slate-500 hover:text-hard-700";
+                    btn.className = `py-1.5 rounded transition font-bold ${textCol}`;
+                }
+            });
+
+            buildNavigationGrid();
+        }
+
+        // Render current selected question
+        function loadQuestion(index) {
+            currentQuestionIndex = index;
+            const q = questions[index];
+
+            // Update SOAL index text
+            document.getElementById('question-index-label').textContent = `SOAL #${(q.id).toString().padStart(2, '0')}`;
+            
+            // Difficulty Badge update
+            const badge = document.getElementById('difficulty-badge');
+            badge.textContent = `Level: ${q.difficulty === 'easy' ? 'Mudah' : q.difficulty === 'medium' ? 'Sedang' : 'Sulit'}`;
+            if (q.difficulty === 'easy') {
+                badge.className = "text-xs font-extrabold px-2.5 py-1 rounded bg-easy-50 text-easy-700 border border-easy-100";
+            } else if (q.difficulty === 'medium') {
+                badge.className = "text-xs font-extrabold px-2.5 py-1 rounded bg-medium-50 text-medium-700 border border-medium-100";
+            } else {
+                badge.className = "text-xs font-extrabold px-2.5 py-1 rounded bg-hard-50 text-hard-700 border border-hard-100";
+            }
+
+            // Question Text
+            document.getElementById('question-text').innerHTML = q.text;
+
+            // Generate options HTML
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            const alreadyAnswered = (userAnswers[index] !== null);
+
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.onclick = () => selectOption(opt.key);
+                
+                let baseStyle = "p-4 border rounded-xl text-left transition text-sm md:text-base font-medium flex items-center justify-between ";
+                
+                if (alreadyAnswered) {
+                    btn.disabled = true;
+                    // Highlight correct and wrong answers on click history
+                    if (opt.key === q.correct) {
+                        baseStyle += "bg-easy-50 border-easy-500 text-easy-800 font-semibold";
+                        btn.innerHTML = `<span>${opt.key}. ${opt.text}</span> <span class="text-easy-700">✔️ Benar</span>`;
+                    } else if (opt.key === userAnswers[index]) {
+                        baseStyle += "bg-hard-50 border-hard-500 text-hard-800 font-semibold";
+                        btn.innerHTML = `<span>${opt.key}. ${opt.text}</span> <span class="text-hard-700">❌ Salah</span>`;
+                    } else {
+                        baseStyle += "bg-slate-50 border-slate-200 text-slate-300";
+                        btn.innerHTML = `<span>${opt.key}. ${opt.text}</span>`;
+                    }
+                } else {
+                    baseStyle += "border-slate-200 hover:border-brand-500 hover:bg-slate-50 text-slate-700";
+                    btn.innerHTML = `<span>${opt.key}. ${opt.text}</span>`;
+                }
+
+                btn.className = baseStyle;
+                optionsContainer.appendChild(btn);
+            });
+
+            // Handle Explanation box display
+            const explanationBox = document.getElementById('explanation-box');
+            if (alreadyAnswered) {
+                explanationBox.classList.remove('hidden');
+                document.getElementById('explanation-text').innerHTML = q.explanation;
+                
+                const isUserCorrect = (userAnswers[index] === q.correct);
+                if (isUserCorrect) {
+                    explanationBox.className = "p-5 rounded-xl border bg-easy-50/50 border-easy-200 space-y-2";
+                    document.getElementById('explanation-status-icon').textContent = "🎯";
+                    document.getElementById('explanation-title').className = "font-bold text-sm text-easy-700";
+                    document.getElementById('explanation-title').textContent = "Jawabanmu Benar!";
+                } else {
+                    explanationBox.className = "p-5 rounded-xl border bg-hard-50/50 border-hard-200 space-y-2";
+                    document.getElementById('explanation-status-icon').textContent = "💡";
+                    document.getElementById('explanation-title').className = "font-bold text-sm text-hard-700";
+                    document.getElementById('explanation-title').textContent = "Coba Pelajari Kembali:";
+                }
+            } else {
+                explanationBox.classList.add('hidden');
+            }
+
+            // Progression Bar update
+            updateProgressBar();
+
+            // Setup Navigation Buttons status
+            const prevBtn = document.getElementById('prev-question-btn');
+            const nextBtn = document.getElementById('next-question-btn');
+            const submitBtn = document.getElementById('submit-quiz-btn');
+
+            if (index === 0) {
+                prevBtn.classList.add('opacity-50', 'pointer-events-none');
+            } else {
+                prevBtn.classList.remove('opacity-50', 'pointer-events-none');
+            }
+
+            if (index === questions.length - 1) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+
+            // Sync navigation active state classes
+            buildNavigationGrid();
+
+            // Re-render Math Formulas (KaTeX)
+            renderMath();
+        }
+
+        // Progress bar calculations
+        function updateProgressBar() {
+            const answeredCount = userAnswers.filter(ans => ans !== null).length;
+            const pct = Math.round((answeredCount / questions.length) * 100);
+            
+            document.getElementById('top-progress-bar').style.width = `${pct}%`;
+            document.getElementById('progress-percentage').textContent = `${pct}%`;
+        }
+
+        // Action when an option is selected
+        function selectOption(key) {
+            if (userAnswers[currentQuestionIndex] !== null) return; // Prevent multiple submittals
+
+            userAnswers[currentQuestionIndex] = key;
+            
+            // Reload current state with explanation
+            loadQuestion(currentQuestionIndex);
+        }
+
+        // Navigate questions (Prev / Next buttons)
+        function navigateQuestion(direction) {
+            const targetIdx = currentQuestionIndex + direction;
+            if (targetIdx >= 0 && targetIdx < questions.length) {
+                loadQuestion(targetIdx);
+            }
+        }
+
+        // Reset Quiz Logic
+        function resetQuizPrompt() {
+            if (confirm("Apakah kamu yakin ingin mereset ulang seluruh jawaban kuis dari awal?")) {
+                userAnswers = Array(questions.length).fill(null);
+                loadQuestion(0);
+            }
+        }
+
+        // Finish Kuis & Show Results
+        function finishQuizPrompt() {
+            const unansweredCount = userAnswers.filter(ans => ans === null).length;
+            
+            if (unansweredCount > 0) {
+                if (!confirm(`Ada ${unansweredCount} soal yang belum terjawab. Apakah kamu yakin tetap ingin mengirimkan lembar jawaban kuis ini?`)) {
+                    return;
+                }
+            }
+
+            stopTimer();
+
+            // Calculate score & statistics
+            let correctCount = 0;
+            questions.forEach((q, idx) => {
+                if (userAnswers[idx] === q.correct) correctCount++;
+            });
+
+            const wrongCount = questions.length - correctCount;
+            const rawScore = Math.round((correctCount / questions.length) * 100);
+
+            // Hide Quiz, Show results screen
+            document.getElementById('quiz-interface').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            // Populate Statistics
+            document.getElementById('stat-score').textContent = `${rawScore} / 100`;
+            document.getElementById('stat-correct').textContent = correctCount;
+            document.getElementById('stat-wrong').textContent = wrongCount;
+
+            const mins = Math.floor(elapsedSeconds / 60).toString().padStart(2, '0');
+            const secs = (elapsedSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('stat-time').textContent = `${mins}:${secs}`;
+
+            // Message based on performance
+            const msgEl = document.getElementById('stat-message');
+            if (rawScore === 100) {
+                msgEl.textContent = "🏆 Sempurna! Kamu telah menyelesaikan seluruh level operasi campuran dengan luar biasa!";
+                msgEl.className = "text-sm font-semibold text-emerald-800 leading-relaxed";
+            } else if (rawScore >= 80) {
+                msgEl.textContent = "🌟 Hebat sekali! Pemahamanmu sangat mantap dan siap menghadapi matematika tingkat lanjut";
+                msgEl.className = "text-sm font-semibold text-emerald-800 leading-relaxed";
+            } else if (rawScore >= 50) {
+                msgEl.textContent = "👍 Kerja bagus! Kamu memiliki dasar hitungan yang sudah cukup baik. Coba ulas sisa jawaban yang keliru di bawah.";
+                msgEl.className = "text-sm font-semibold text-amber-800 leading-relaxed";
+            } else {
+                msgEl.textContent = "📚 Semangat belajarmu patut diacungi jempol. Jangan berkecil hati, ayo ulas pembahasan secara perlahan untuk memperkuat pemahaman.";
+                msgEl.className = "text-sm font-semibold text-red-800 leading-relaxed";
+            }
+        }
+
+        // Go to Review Mode to see all 15 questions summary
+        function goToReviewMode() {
+            const reviewContainer = document.getElementById('detailed-review');
+            reviewContainer.classList.remove('hidden');
+
+            const listContainer = document.getElementById('review-cards-list');
+            listContainer.innerHTML = '';
+
+            questions.forEach((q, idx) => {
+                const isCorrect = (userAnswers[idx] === q.correct);
+                const card = document.createElement('div');
+                
+                let cardClass = "p-5 border rounded-2xl bg-white space-y-4 shadow-sm ";
+                if (isCorrect) {
+                    cardClass += "border-easy-200";
+                } else if (userAnswers[idx] === null) {
+                    cardClass += "border-slate-200 opacity-80";
+                } else {
+                    cardClass += "border-hard-200";
+                }
+
+                card.className = cardClass;
+                
+                // Construct options summary layout
+                let optionsHTML = '';
+                q.options.forEach(opt => {
+                    let optStyle = "text-xs md:text-sm px-3 py-1.5 rounded-lg border ";
+                    if (opt.key === q.correct) {
+                        optStyle += "bg-easy-50 border-easy-300 text-easy-800 font-bold";
+                    } else if (opt.key === userAnswers[idx]) {
+                        optStyle += "bg-hard-50 border-hard-300 text-hard-800 font-bold";
+                    } else {
+                        optStyle += "bg-slate-50 border-slate-100 text-slate-500";
+                    }
+                    optionsHTML += `<span class="${optStyle}">${opt.key}. ${opt.text}</span>`;
+                });
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold font-mono text-slate-400">SOAL #${(q.id).toString().padStart(2, '0')}</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${q.difficulty === 'easy' ? 'bg-easy-50 text-easy-700' : q.difficulty === 'medium' ? 'bg-medium-50 text-medium-700' : 'bg-hard-50 text-hard-700'}">${q.difficulty.toUpperCase()}</span>
+                        </div>
+                        <span class="text-xs font-bold ${isCorrect ? 'text-easy-700' : 'text-hard-700'}">
+                            ${isCorrect ? '✔️ Benar' : userAnswers[idx] === null ? '⚪ Belum Dijawab' : '❌ Salah'}
+                        </span>
+                    </div>
+                    <p class="text-sm font-semibold text-slate-800 leading-relaxed">${q.text}</p>
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        ${optionsHTML}
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl text-xs text-slate-600 leading-relaxed">
+                        <strong class="block text-slate-800 mb-1">💡 Pembahasan:</strong>
+                        ${q.explanation}
+                    </div>
+                `;
+
+                listContainer.appendChild(card);
+            });
+
+            renderMath();
+            
+            // Scroll smoothly down to the review panel
+            reviewContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Restart Quiz from scratch
+        function restartQuiz() {
+            userAnswers = Array(questions.length).fill(null);
+            currentQuestionIndex = 0;
+            selectedDifficultyFilter = 'all';
+
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('detailed-review').classList.add('hidden');
+            document.getElementById('quiz-interface').classList.remove('hidden');
+
+            // Reset navigation filters visual
+            filterDifficulty('all');
+            
+            // Start quiz again
+            startQuiz();
+        }
+
+        // Render equations using KaTeX
+        function renderMath() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError : false
+                });
+            }
+        }
+    </script>
+</body>
+</html>
